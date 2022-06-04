@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Standardbank Web, Teste criado por Carlos Domingos">
+    <meta name="author" content="Carlos Francisco Domingos">
+    <title>Standardbank - Carlos</title>
+
+    <!-- Link de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <!-- Link da folha de estilo -->
+    <link type="text/css" rel="stylesheet" href="css/index.css" />
+
+</head>
+
+<body style="background-color: #e9ecef">
+
+    <!-- navbar menu -->
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="" width="24" height="24" class="d-inline-block align-text-top">
+                Standardbank
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Balcão
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Atendimento</a></li>
+                            <li><a class="dropdown-item" href="#">Abertura de conta</a></li>
+                            <li><a class="dropdown-item" href="#">Solicitação de cartão</a></li>
+                            <li><a class="dropdown-item" href="#">Actualização de documentos</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Conta-corrente</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Pagamentos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Pagamento de contas</a></li>
+                            <li><a class="dropdown-item" href="#">Pagamento de água</a></li>
+                            <li><a class="dropdown-item" href="#">Pagamento de energia</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Outras operações
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Investimentos</a></li>
+                            <li><a class="dropdown-item" href="#">Seguros</a></li>
+                            <li><a class="dropdown-item" href="#">Consórcios</a></li>
+                            <li><a class="dropdown-item" href="#">Empréstimos</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Minha conta
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <h6 class="dropdown-header">Não associado a conta bancária</h6>
+                            <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-usuario" class="dropdown-item"
+                                    href="#">Perfil do usuário</a></li>
+                            <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-conta" id="link-perfil-conta"
+                                    class="dropdown-item disabled" href="#">Perfil da Conta bancária</a></li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-associar"
+                                    id="link-perfil-associar" class="dropdown-item active" aria-current="true"
+                                    href="#">Associar Conta
+                                    bancária</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logout"><i class="fa fa-sign-out"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- /navbar menu -->
+
+    <!-- accordion menu -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="jumbotron">
+                    <h1 class="display-4" id="titulo">Olá, seja bem-vindo/a!</h1>
+                    <p class="lead">O Standardbank Online proporciona mais agilidade, facilidade e controle na gestão de
+                        conta bancária e comunicação
+                        com o balcão de atendimento visando a flexibilização dos nossos serviços.</p>
+                    <hr class="my-4">
+                    <p class="font-weight-normal">©2022. Standardbank Online, Carlos Francisco Domingos.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /accordion menu -->
+
+    <!-- modal perfil usuario -->
+
+    <div class="modal fade" id="modal-perfil-usuario" tabindex="-1" role="dialog"
+        aria-labelledby="modal-perfil-usuario-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-definicao-conta-titulo">Informações do Perfil do Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+
+                    <form id="perfil-usuario">
+
+                        <div class="row g-3">
+
+                            <div class="col-12">
+                                <label for="perfil-nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="perfil-nome" placeholder="Nome" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Por favor insira um nome válido.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="perfil-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="perfil-email"
+                                    placeholder="nome@standardbank.com">
+                                <div class="invalid-feedback">
+                                    Por favor insira um endereço de email válido.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="perfil-senha" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="perfil-senha" placeholder="">
+                                <div class="invalid-feedback">
+                                    Por favor insira uma senha segura.
+                                </div>
+                            </div>
+
+                        </div>
+                        </br>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal solicitar associação de conta bancária -->
+
+    <div class="modal" id="modal-perfil-associar" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-definicao-conta-titulo">Solicitação de associação de conta
+                        bancária</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="perfil-associar">
+                    <div class="py-5 text-center">
+                        <h2>Checkout form</h2>
+                        <p class="lead">Below is an example form built entirely with Bootstrap’s form
+                            controls. Each required form group has a validation state that can be triggered
+                            by attempting to submit the form without completing it.</p>
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="firstName" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="lastName" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" class="form-control" id="username" placeholder="Username"
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Your username is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="email" class="form-label">Email <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter your shipping address.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="address2" class="form-label">Address 2 <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="country" class="form-label">Country</label>
+                                <select class="form-select" id="country" required>
+                                    <option value="">Choose...</option>
+                                    <option>United States</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid country.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="state" class="form-label">State</label>
+                                <select class="form-select" id="state" required>
+                                    <option value="">Choose...</option>
+                                    <option>California</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="zip" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Zip code required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="same-address">
+                            <label class="form-check-label" for="same-address">Shipping address is the same
+                                as my billing address</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="save-info">
+                            <label class="form-check-label" for="save-info">Save this information for next
+                                time</label>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">Payment</h4>
+
+                        <div class="my-3">
+                            <div class="form-check">
+                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
+                                    required>
+                                <label class="form-check-label" for="credit">Credit card</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                                <label class="form-check-label" for="debit">Debit card</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                                <label class="form-check-label" for="paypal">PayPal</label>
+                            </div>
+                        </div>
+
+                        <div class="row gy-3">
+                            <div class="col-md-6">
+                                <label for="cc-name" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                                <small class="text-muted">Full name as displayed on card</small>
+                                <div class="invalid-feedback">
+                                    Name on card is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cc-number" class="form-label">Credit card number</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Credit card number is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Expiration date required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Security code required
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to
+                            checkout</button>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Enviar solicitação</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+    <!-- JavaScript do Firebase -->
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-database.js"></script>
+
+    <script>
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDg9S5C9ScP-iPgNH1HV87FlZ1lVMg62ZI",
+            authDomain: "standardbank01-carlos.firebaseapp.com",
+            databaseURL: "https://standardbank01-carlos-default-rtdb.firebaseio.com",
+            projectId: "standardbank01-carlos",
+            storageBucket: "standardbank01-carlos.appspot.com",
+            messagingSenderId: "498387948122",
+            appId: "1:498387948122:web:a6e9eedc7ba2b2f7d77e63",
+            measurementId: "G-MMS2BW52NF"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Aactualizar definições da base de dados
+        try { database.settings({ timestampsInSnapshots: true }); } catch (e) { }
+
+    </script>
+
+
+    <script src="script/index.js"></script>
+
+
+</body>
+
+</html>
