@@ -13,6 +13,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
     <!-- Link da folha de estilo -->
     <link type="text/css" rel="stylesheet" href="css/index.css" />
 
@@ -41,16 +45,17 @@
                             Balcão
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Atendimento</a></li>
+                            <li id="atendimentoMenu"><a data-bs-toggle="modal" data-bs-target="#modal-atendimento"
+                                    class="dropdown-item" href="#">Atendimento</a></li>
+                            <li id="atendimentoMenuCliente"><a data-bs-toggle="modal"
+                                    data-bs-target="#modal-atendimento-cliente" class="dropdown-item"
+                                    href="#">Atendimento ao cliente</a></li>
                             <li><a class="dropdown-item" href="#">Abertura de conta</a></li>
                             <li><a class="dropdown-item" href="#">Solicitação de cartão</a></li>
                             <li><a class="dropdown-item" href="#">Actualização de documentos</a></li>
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Conta-corrente</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,14 +79,28 @@
                             <li><a class="dropdown-item" href="#">Empréstimos</a></li>
                         </ul>
                     </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="menuContaAssociada" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Contas associadas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a data-bs-toggle="modal" data-bs-target="#modal-associacao" class="dropdown-item"
+                                    href="#">Lista de contas associadas</a></li>
+                            <li><a data-bs-toggle="modal" data-bs-target="#modal-associacao-pendente"
+                                    class="dropdown-item" href="#">Pedidos de associação de conta</a></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Minha conta
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul class="dropdown-menu" id="testm" aria-labelledby="navbarDropdownMenuLink">
 
-                            <h6 class="dropdown-header">Não associado a conta bancária</h6>
+                            <h6 class="dropdown-header" id="estado-associacao-conta">Não associado a conta bancária</h6>
                             <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-usuario" class="dropdown-item"
                                     href="#">Perfil do usuário</a></li>
                             <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-conta" id="link-perfil-conta"
@@ -90,9 +109,9 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a data-bs-toggle="modal" data-bs-target="#modal-perfil-associar"
-                                    id="link-perfil-associar" class="dropdown-item active" aria-current="true"
-                                    href="#">Associar Conta
+                            <li id="link-perfil-associar-li"><a data-bs-toggle="modal"
+                                    data-bs-target="#modal-perfil-associar" id="link-perfil-associar"
+                                    class="dropdown-item active " aria-current="true" href="#">Associar Conta
                                     bancária</a></li>
                         </ul>
                     </li>
@@ -127,13 +146,12 @@
     <!-- /accordion menu -->
 
     <!-- modal perfil usuario -->
-
-    <div class="modal fade" id="modal-perfil-usuario" tabindex="-1" role="dialog"
-        aria-labelledby="modal-perfil-usuario-titulo" aria-hidden="true">
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-perfil-usuario" tabindex="-1"
+        role="dialog" aria-labelledby="modal-perfil-usuario-titulo" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-definicao-conta-titulo">Informações do Perfil do Usuário</h5>
+                    <h5 class="modal-title">Informações do Perfil do Usuário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 </div>
@@ -172,6 +190,7 @@
                         </div>
                         </br>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>
@@ -180,198 +199,455 @@
         </div>
     </div>
 
-    <!-- modal solicitar associação de conta bancária -->
-
-    <div class="modal" id="modal-perfil-associar" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <!-- modal perfil conta bancária -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-perfil-conta" tabindex="-1"
+        role="dialog" aria-labelledby="modal-perfil-conta-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-definicao-conta-titulo">Solicitação de associação de conta
-                        bancária</h5>
+                    <h5 class="modal-title">Informações do Perfil da Conta bancária</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="perfil-associar">
-                    <div class="py-5 text-center">
-                        <h2>Checkout form</h2>
-                        <p class="lead">Below is an example form built entirely with Bootstrap’s form
-                            controls. Each required form group has a validation state that can be triggered
-                            by attempting to submit the form without completing it.</p>
-                    </div>
-
-                    <div class="row g-3">
+                    <form id="perfil-conta">
+                        <div class="py-1 text-center">
+                            <p class="lead">Sua conta bancária está associada ao seu perfil de usuário.</br>Seus
+                                dados bancários estão seguros e criptografados, para desvincular sua conta bancária
+                                do seu perfil de usuário, faça uma solicitação na central de atendimento online.</p>
+                        </div>
 
                         <div class="row g-3">
                             <div class="col-sm-6">
-                                <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                                <label for="conta-nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="conta-nome" placeholder="" value=""
+                                    disabled>
                                 <div class="invalid-feedback">
-                                    Valid first name is required.
+                                    Insira um nome válido.
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
-                                <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                                <label for="conta-apelido" class="form-label">Apelido</label>
+                                <input type="text" class="form-control" id="conta-apelido" placeholder="" value=""
+                                    disabled>
                                 <div class="invalid-feedback">
-                                    Valid last name is required.
+                                    Insira um apelido válido.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="conta-sexo" class="form-label">Sexo</label>
+                                <input type="text" class="form-control" id="conta-sexo" placeholder="" value=""
+                                    disabled>
+                                <div class="invalid-feedback">
+                                    Insira um sexo válido.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="conta-bi" class="form-label">Bilhete de identidade</label>
+                                <input type="text" class="form-control" id="conta-bi" placeholder="" value="" disabled>
+                                <div class="invalid-feedback">
+                                    Insira um número de identidade válido.
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <label for="username" class="form-label">Username</label>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text">@</span>
-                                    <input type="text" class="form-control" id="username" placeholder="Username"
-                                        required>
-                                    <div class="invalid-feedback">
-                                        Your username is required.
-                                    </div>
+                                <label for="conta-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="conta-email" placeholder="" disabled>
+                                <div class="invalid-feedback">
+                                    Insira um endereço de email válido.
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <label for="email" class="form-label">Email <span
-                                        class="text-muted">(Optional)</span></label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                            <div class="col-sm-6">
+                                <label for="conta-endereco" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="conta-endereco" placeholder="" disabled>
                                 <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
+                                    Insira um endereço válido.
                                 </div>
                             </div>
 
-
-                            <div class="col-12">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                    required>
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
+                            <div class="col-sm-6">
+                                <label for="conta-endereco2" class="form-label">Endereço 2 <span
+                                        class="text-muted">(Opcional)</span></label>
+                                <input type="text" class="form-control" id="conta-endereco2" placeholder="" disabled>
                             </div>
 
-                            <div class="col-12">
-                                <label for="address2" class="form-label">Address 2 <span
-                                        class="text-muted">(Optional)</span></label>
-                                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-                            </div>
-
-                            <div class="col-md-5">
-                                <label for="country" class="form-label">Country</label>
-                                <select class="form-select" id="country" required>
-                                    <option value="">Choose...</option>
-                                    <option>United States</option>
-                                </select>
+                            <div class="col-md-4">
+                                <label for="conta-provincia" class="form-label">Província</label>
+                                <input type="text" class="form-control" id="conta-provincia" placeholder="" value=""
+                                    disabled>
                                 <div class="invalid-feedback">
-                                    Please select a valid country.
+                                    Insira uma província válida.
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="state" class="form-label">State</label>
-                                <select class="form-select" id="state" required>
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
+                                <label for="conta-distrito" class="form-label">Distrito</label>
+                                <input type="text" class="form-control" id="conta-distrito" placeholder="" value=""
+                                    disabled>
                                 <div class="invalid-feedback">
-                                    Please provide a valid state.
+                                    Insira um distrito válido.
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="zip" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                            <div class="col-md-4">
+                                <label for="conta-zip" class="form-label">Código postal</label>
+                                <input type="text" class="form-control" id="conta-zip" placeholder="" disabled>
                                 <div class="invalid-feedback">
-                                    Zip code required.
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
-
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="same-address">
-                            <label class="form-check-label" for="same-address">Shipping address is the same
-                                as my billing address</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="save-info">
-                            <label class="form-check-label" for="save-info">Save this information for next
-                                time</label>
-                        </div>
-
-                        <hr class="my-4">
-
-                        <h4 class="mb-3">Payment</h4>
-
-                        <div class="my-3">
-                            <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
-                                    required>
-                                <label class="form-check-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="debit">Debit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="paypal">PayPal</label>
-                            </div>
-                        </div>
-
-                        <div class="row gy-3">
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label">Name on card</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small class="text-muted">Full name as displayed on card</small>
-                                <div class="invalid-feedback">
-                                    Name on card is required
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="cc-number" class="form-label">Credit card number</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Credit card number is required
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">Expiration</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Expiration date required
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Security code required
+                                    Insira um código postal válido.
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="my-4">
+                        </br>
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to
-                            checkout</button>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="conta-profissao" class="form-label">Profissão</label>
+                                <input type="text" class="form-control" id="conta-profissao" placeholder="" value=""
+                                    disabled>
+                                <div class="invalid-feedback">
+                                    Insira uma profissão válida.
+                                </div>
+                            </div>
 
-                    </div>
+                            <div class="col-sm-6">
+                                <label for="conta-funcao" class="form-label">Função</label>
+                                <input type="text" class="form-control" id="conta-funcao" placeholder="" value=""
+                                    disabled>
+                                <div class="invalid-feedback">
+                                    Insira uma função válida.
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="conta-empresa" class="form-label">Empresa</label>
+                                <input type="text" class="form-control" id="conta-empresa" placeholder="" value=""
+                                    disabled>
+                                <div class="invalid-feedback">
+                                    Insira uma empresa válida.
+                                </div>
+                            </div>
+
+                        </div>
+
 
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Enviar solicitação</button>
                 </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>
+
+    <!-- modal contas associadas -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-associacao" tabindex="-1"
+        role="dialog" aria-labelledby="modal-associacao-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lista de Contas associadas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Apelido</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">Bilhete de identificação</th>
+                                <th scope="col">Endereço</th>
+                                <th scope="col">Província</th>
+                                <th scope="col">Operações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_associacao_corpo">
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal solicitacao de associacao de conta -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-associacao-pendente"
+        tabindex="-1" role="dialog" aria-labelledby="modal-associacao-pendente-titulo" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pedidos de Associação de conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Apelido</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">Bilhete de identificação</th>
+                                <th scope="col">Endereço</th>
+                                <th scope="col">Província</th>
+                                <th scope="col">Operações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_associacao_pendente_corpo">
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal solicitar associação de conta bancária -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-perfil-associar" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Solicitação de associação de conta bancária</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="perfil-associar">
+                        <div class="py-5 text-center">
+                            <h2>Termos e Condições</h2>
+                            <p class="lead">Por favor, leia os <a class="link-primary" href="#">Termos e Condições</a>
+                                atentamente para que possa compreender
+                                as nossas práticas relativamente à forma como tratamos a associação do perfil à conta
+                                bancária e como tratamos esta informação.</p>
+
+                            <p class="lead">Preencha o formulário abaixo com suas informações.</br>
+                                Após solicitar o pedido de associação do seu perfil à sua conta bancária iremos
+                                analisar as suas informações e pode demorar até 42 horas para o pedido ser aprovado.</p>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="assos-nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="assos-nome" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Insira um nome válido.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="assos-apelido" class="form-label">Apelido</label>
+                                <input type="text" class="form-control" id="assos-apelido" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Insira um apelido válido.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="assos-pedido" class="form-label">Pedido</label>
+                                <select class="form-select" id="assos-pedido" required>
+                                    <option value="Assos. de conta">Assos. de conta</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Insira um sexo válido.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="assos-sexo" class="form-label">Sexo</label>
+                                <select class="form-select" id="assos-sexo" required>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Insira um sexo válido.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="assos-bi" class="form-label">Bilhete de identidade</label>
+                                <input type="text" class="form-control" id="assos-bi" placeholder="" value="" required>
+                                <div class="invalid-feedback">
+                                    Insira um número de identidade válido.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="assos-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="assos-email" placeholder="">
+                                <div class="invalid-feedback">
+                                    Insira um endereço de email válido.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="assos-endereco" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="assos-endereco" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Insira um endereço válido.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="assos-endereco2" class="form-label">Endereço 2 <span
+                                        class="text-muted">(Opcional)</span></label>
+                                <input type="text" class="form-control" id="assos-endereco2" placeholder="">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="assos-provincia" class="form-label">Província</label>
+                                <select class="form-select" id="assos-provincia" required>
+                                    <option value="">Escolher...</option>
+                                    <option>Tete</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Insira uma província válida.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="assos-distrito" class="form-label">Distrito</label>
+                                <select class="form-select" id="assos-distrito" required>
+                                    <option value="">Escolher...</option>
+                                    <option>Tete</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Insira um distrito válido.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="assos-zip" class="form-label">Código postal</label>
+                                <input type="text" class="form-control" id="assos-zip" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Insira um código postal válido.
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">Dados profissionais</h4>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="assos-profissao" class="form-label">Profissão</label>
+                                <input type="text" class="form-control" id="assos-profissao" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Insira uma profissão válida.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="assos-funcao" class="form-label">Função</label>
+                                <input type="text" class="form-control" id="assos-funcao" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Insira uma função válida.
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="assos-empresa" class="form-label">Empresa</label>
+                                <input type="text" class="form-control" id="assos-empresa" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Insira uma empresa válida.
+                                </div>
+                            </div>
+
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" id="btn-enviar-solicitacao-assos" class="btn btn-primary">Enviar
+                        solicitação</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal atendimento -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-atendimento" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atendimento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="atendimento">
+
+                        <!-- listar as mensagens -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:200px">Nome</th>
+                                    <th scope="col">Mensagem</th>
+                                    <th scope="col" style="width:200px">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl_lista_mensagem_corpo">
+                            </tbody>
+                        </table>
+
+                </div>
+                <div class="modal-footer">
+                    <textarea class="form-control" id="enviar-mensagem" placeholder="Mensagem..."></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal lista conversas -->
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-atendimento-cliente"
+        tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atendimento ao cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- lista das conversas -->
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Operações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_lista_conversas_corpo">
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
 
     <!-- JavaScript do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
